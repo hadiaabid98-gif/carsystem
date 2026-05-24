@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
+﻿using System.Data;
 using System.Windows.Forms;
 using CarSystem.DAL;
 using CarSystem.Models;
@@ -36,9 +31,10 @@ namespace CarSystem.BAL
         {
             return dal.GetAll();
         }
+        public DataTable Search(string keyword)
+        {
+            return dal.Search(keyword);
+        }
     }
+    
 }
-internal class CustomerBALcs
-{
-}
-
