@@ -47,7 +47,8 @@ namespace CarSystem.DAL
             using (SqlConnection con = DBHelper.GetConnection())
             {
                 con.Open();
-                SqlCommand cmd = new SqlCommand("DELETE FROM cars WHERE carid=@carid", con);
+                SqlCommand cmd = new SqlCommand(
+                    "DELETE FROM cars WHERE carid=@carid", con);
                 cmd.Parameters.AddWithValue("@carid", carID);
                 cmd.ExecuteNonQuery();
             }
@@ -64,5 +65,20 @@ namespace CarSystem.DAL
                 return dt;
             }
         }
-    }
-}
+
+        public DataTable Search(string keyword)
+        {
+            using (SqlConnection con = DBHelper.GetConnection())
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT * FROM cars WHERE carname LIKE @kw OR platenumber LIKE @kw OR model LIKE @kw", con);
+                cmd.Parameters.AddWithValue("@kw", "%" + keyword + "%");
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
+    }  // class closing
+}      // namespace closing
