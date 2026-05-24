@@ -61,5 +61,19 @@ namespace CarSystem.DAL
                 return dt;
             }
         }
+        public DataTable Search(string keyword)
+        {
+            using (SqlConnection con = DBHelper.GetConnection())
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT * FROM customers WHERE customername LIKE @kw OR phone LIKE @kw OR email LIKE @kw", con);
+                cmd.Parameters.AddWithValue("@kw", "%" + keyword + "%");
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                return dt;
+            }
+        }
     }
 }
