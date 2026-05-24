@@ -1,0 +1,9 @@
+﻿namespace CarSystem.Models
+{
+    public class CategoryModel
+    {
+        public int CategoryID { get; set; }
+        public string CarName { get; set; }
+        public string CategoryName { get; set; }
+    }
+}
