@@ -1,46 +1,35 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
+using System.Windows.Forms;
 using CarSystem.DAL;
+using CarSystem.Models;
 
 namespace CarSystem.BAL
 {
     public class PaymentBAL
     {
+        private PaymentDAL dal = new PaymentDAL();
+
         public DataTable GetAll()
         {
-            DataTable dt = new DataTable();
-            using (SqlConnection conn = DBHelper.GetConnection())
-            {
-                string query = "SELECT * FROM Payments";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
-                    {
-                        adapter.Fill(dt);
-                    }
-                }
-            }
-            return dt;
+            return dal.GetAll();
         }
 
-
-        public bool Save(dynamic payment)
+        public void Save(PaymentModel payment)
         {
-
-            return true;
+            dal.Insert(payment); 
+            MessageBox.Show("Payment Saved Successfully");
         }
 
-        public bool Update(dynamic payment)
+        public void Update(PaymentModel payment)
         {
-
-            return true;
+            dal.Update(payment); 
+            MessageBox.Show("Payment Updated Successfully");
         }
 
-        public bool Delete(int id)
+        public void Delete(int id)
         {
-
-            return true;
+            dal.Delete(id); 
+            MessageBox.Show("Payment Deleted Successfully");
         }
     }
 }
