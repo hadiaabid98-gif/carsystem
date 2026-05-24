@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BAL\CarBAL.cs" />
+    <Compile Include="BAL\CategoryBAL.cs" />
+    <Compile Include="BAL\CustomerBAL.cs" />
+    <Compile Include="BAL\MaintenanceBAL.cs" />
+    <Compile Include="BAL\PaymentBAL.cs" />
+    <Compile Include="BAL\RentalBAL.cs" />
     <Compile Include="Car.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -64,6 +70,13 @@
     <Compile Include="Customer.Designer.cs">
       <DependentUpon>Customer.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\CarDAL.cs" />
+    <Compile Include="DAL\CategoryDAL.cs" />
+    <Compile Include="DAL\CustomerDAL.cs" />
+    <Compile Include="DAL\DBHelper.cs" />
+    <Compile Include="DAL\MaintenanceDAL.cs" />
+    <Compile Include="DAL\PaymentDAL.cs" />
+    <Compile Include="DAL\RentalDAL.cs" />
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +101,12 @@
     <Compile Include="Maintenance.Designer.cs">
       <DependentUpon>Maintenance.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\CarModel.cs" />
+    <Compile Include="Models\CategoryModel.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\MaintenanceModel.cs" />
+    <Compile Include="Models\PaymentModel.cs" />
+    <Compile Include="Models\RentalModel.cs" />
     <Compile Include="Payment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,5 +201,6 @@
   <ItemGroup>
     <None Include="Resources\10.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
