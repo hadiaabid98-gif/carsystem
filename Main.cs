@@ -1,25 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CarSystem
 {
     public partial class Main : Form
     {
-        public Main()
-        {
-            InitializeComponent();
-        }
+        public Main() { InitializeComponent(); }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Customer cr= new Customer();
+            Customer cr = new Customer();
             cr.Show();
         }
 
@@ -37,26 +27,31 @@ namespace CarSystem
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Rental rl= new Rental();    
+            Rental rl = new Rental();
             rl.Show();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Payment pt= new Payment();  
+            Payment pt = new Payment();
             pt.Show();
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Maintenance me= new Maintenance();  
+            Maintenance me = new Maintenance();
             me.Show();
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Dashboard dd= new Dashboard();  
+            Dashboard dd = new Dashboard();
             dd.Show();
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
