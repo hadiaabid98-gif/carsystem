@@ -31,5 +31,10 @@ namespace CarSystem.BAL
         {
             return dal.GetAll();
         }
+
+        public DataTable Search(string keyword)
+        {
+            return dal.Search(keyword);
+        }
     }
 }
