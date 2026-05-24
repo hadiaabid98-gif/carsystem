@@ -1,96 +1,64 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using CarSystem.BAL;
+using CarSystem.Models;
 
 namespace CarSystem
 {
     public partial class Maintenance : Form
     {
-        public Maintenance()
+        private MaintenanceBAL bal = new MaintenanceBAL();
+
+        public Maintenance() { InitializeComponent(); }
+
+        private void Maintenance_Load(object sender, EventArgs e)
         {
-            InitializeComponent();
+            dataGridView1.DataSource = bal.GetAll();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source = localhost\SQLEXPRESS; Initial Catalog = CarSystemDB; Integrated Security = True; TrustServerCertificate = True");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("insert into maintenance values(@maintenanceid,@carname,@model,@service,@cost)", con);
-            cnn.Parameters.AddWithValue("@maintenanceid", int.Parse(textBox1.Text));
-            cnn.Parameters.AddWithValue("@carname", textBox2.Text);
-            cnn.Parameters.AddWithValue("@model", textBox3.Text);
-            cnn.Parameters.AddWithValue("@service", textBox4.Text);
-            cnn.Parameters.AddWithValue("@cost", int.Parse(textBox5.Text));
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Saved Successfully");
+            MaintenanceModel m = new MaintenanceModel
+            {
+                MaintenanceID = int.Parse(textBox1.Text),
+                CarName = textBox2.Text,
+                Model = textBox3.Text,
+                Service = textBox4.Text,
+                Cost = int.Parse(textBox5.Text)
+            };
+            bal.Save(m);
+            dataGridView1.DataSource = bal.GetAll();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
-            SqlConnection con = new SqlConnection(@"Data Source = localhost\SQLEXPRESS; Initial Catalog = CarSystemDB; Integrated Security = True; TrustServerCertificate = True");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("select * from maintenance", con);
-            SqlDataAdapter da = new SqlDataAdapter(cnn);
-            DataTable table = new DataTable();
-            da.Fill(table);
-            dataGridView1.DataSource = table;
+            dataGridView1.DataSource = bal.GetAll();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-
-            SqlConnection con = new SqlConnection(@"Data Source = localhost\SQLEXPRESS; Initial Catalog = CarSystemDB; Integrated Security = True; TrustServerCertificate = True");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("Update maintenance set carname=@carname,model=@model,service=@service,cost=@cost where maintenanceid=@maintenanceid", con);
-            cnn.Parameters.AddWithValue("@maintenanceid", int.Parse(textBox1.Text));
-            cnn.Parameters.AddWithValue("@carname", textBox2.Text);
-            cnn.Parameters.AddWithValue("@model", textBox3.Text);
-            cnn.Parameters.AddWithValue("@service", textBox4.Text);
-            cnn.Parameters.AddWithValue("@cost", int.Parse(textBox5.Text));
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Updated Successfully");
+            MaintenanceModel m = new MaintenanceModel
+            {
+                MaintenanceID = int.Parse(textBox1.Text),
+                CarName = textBox2.Text,
+                Model = textBox3.Text,
+                Service = textBox4.Text,
+                Cost = int.Parse(textBox5.Text)
+            };
+            bal.Update(m);
+            dataGridView1.DataSource = bal.GetAll();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            SqlConnection con = new SqlConnection(@"Data Source = localhost\SQLEXPRESS; Initial Catalog = CarSystemDB; Integrated Security = True; TrustServerCertificate = True");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("delete from maintenance where maintenanceid=@maintenanceid", con);
-            cnn.Parameters.AddWithValue("@maintenanceid", int.Parse(textBox1.Text));
-            cnn.ExecuteNonQuery();
-            con.Close();
-            MessageBox.Show("Record Deleted Successfully");
+            bal.Delete(int.Parse(textBox1.Text));
+            dataGridView1.DataSource = bal.GetAll();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            textBox1.Text = "";
-            textBox2.Text = "";
-            textBox3.Text = "";
-            textBox4.Text = "";
-            textBox5.Text = "";
-            textBox5.Text = "";
-        }
-
-        private void Maintenance_Load(object sender, EventArgs e)
-        {
-            SqlConnection con = new SqlConnection(@"Data Source = localhost\SQLEXPRESS; Initial Catalog = CarSystemDB; Integrated Security = True; TrustServerCertificate = True");
-            con.Open();
-            SqlCommand cnn = new SqlCommand("select * from maintenance", con);
-            SqlDataAdapter da = new SqlDataAdapter(cnn);
-            DataTable table = new DataTable();
-            da.Fill(table);
-            dataGridView1.DataSource = table;
+            textBox1.Text = ""; textBox2.Text = ""; textBox3.Text = "";
+            textBox4.Text = ""; textBox5.Text = "";
         }
     }
 }
