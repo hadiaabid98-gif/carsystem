@@ -1,57 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Windows.Forms;
+using CarSystem.DAL;
 
 namespace CarSystem
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-        }
+        public Form1() { InitializeComponent(); }
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Create database connection
-            SqlConnection con = new SqlConnection(@"Data Source = localhost\SQLEXPRESS; Initial Catalog = CarSystemDB; Integrated Security = True; TrustServerCertificate = True");
-            // Open database connection
-            con.Open();
-            // Store username entered by user
-            string username = txtUsername.Text;
-            // Store password entered by user
-            string password = txtPassword.Text;
-            // Create SQL query for login checking
-            SqlCommand cmd = new SqlCommand("select Username,Password from logintab where Username='" + txtUsername.Text + "'and Password='" + txtPassword.Text + "'", con);
-            // Create DataAdapter object to fetch data
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            // Create DataTable to store fetched data
-            DataTable dt = new DataTable();
-            // Fill DataTable with database data
-            da.Fill(dt);
-            // Check Wheather user exists or not
-            if (dt.Rows.Count > 0)
+            using (SqlConnection con = DBHelper.GetConnection())
             {
-                Main mn = new Main();
-                mn.Show();
-                
+                con.Open();
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT Username, Password FROM logintab WHERE Username=@username AND Password=@password", con);
+                cmd.Parameters.AddWithValue("@username", txtUsername.Text);
+                cmd.Parameters.AddWithValue("@password", txtPassword.Text);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    Main mn = new Main();
+                    mn.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid Login");
+                }
             }
-            else
-            {
-                // Show error message if login fails
-                MessageBox.Show("Invalid Login");
-            }
-            // Close database connection
-            con.Close();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
     }
-    
 }
