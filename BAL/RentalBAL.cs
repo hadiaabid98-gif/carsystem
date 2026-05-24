@@ -1,72 +1,35 @@
-﻿using System;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
+using System.Windows.Forms;
 using CarSystem.DAL;
+using CarSystem.Models;
 
 namespace CarSystem.BAL
 {
     public class RentalBAL
     {
+        private RentalDAL dal = new RentalDAL();
+
         public DataTable GetAll()
         {
-            DataTable dt = new DataTable();
-            using (SqlConnection conn = DBHelper.GetConnection())
-            {
-                string query = "SELECT * FROM Rentals";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
-                    {
-                        adapter.Fill(dt);
-                    }
-                }
-            }
-            return dt;
+            return dal.GetAll();
         }
 
-        public bool Save(dynamic rental)
+        public void Save(RentalModel rental)
         {
-
-            return true;
-        }
-        // Rentals ko update karne ke liye function
-        public bool Update(dynamic rental)
-        {
-            using (SqlConnection conn = DBHelper.GetConnection())
-            {
-
-                string query = "UPDATE Rentals SET CarID=@CarID, CustomerID=@CustomerID, RentDate=@RentDate, ReturnDate=@ReturnDate WHERE RentalID=@RentalID";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-
-                    cmd.Parameters.AddWithValue("@RentalID", rental.RentalID);
-                    cmd.Parameters.AddWithValue("@CarID", rental.CarID);
-                    cmd.Parameters.AddWithValue("@CustomerID", rental.CustomerID);
-                    cmd.Parameters.AddWithValue("@RentDate", rental.RentDate);
-                    cmd.Parameters.AddWithValue("@ReturnDate", rental.ReturnDate);
-
-                    conn.Open();
-                    int rows = cmd.ExecuteNonQuery();
-                    return rows > 0;
-                }
-            }
+            dal.Insert(rental);
+            MessageBox.Show("Rental Saved Successfully");
         }
 
-
-        public bool Delete(int id)
+        public void Update(RentalModel rental)
         {
-            using (SqlConnection conn = DBHelper.GetConnection())
-            {
-                string query = "DELETE FROM Rentals WHERE RentalID=@RentalID";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@RentalID", id);
+            dal.Update(rental); 
+            MessageBox.Show("Rental Updated Successfully");
+        }
 
-                    conn.Open();
-                    int rows = cmd.ExecuteNonQuery();
-                    return rows > 0;
-                }
-            }
+        public void Delete(int id)
+        {
+            dal.Delete(id); 
+            MessageBox.Show("Rental Deleted Successfully");
         }
     }
 }
