@@ -17,15 +17,7 @@ namespace CarSystem
             dataGridView1.DataSource = bal.GetAll();
         }
 
-        // ADD button
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            textBox1.Text = "";
-            textBox2.Text = "";
-            textBox3.Text = "";
-            textBox4.Text = "";
-            textBox1.Focus();
-        }
+    
 
         // SAVE button
         private void btnSave_Click(object sender, EventArgs e)
